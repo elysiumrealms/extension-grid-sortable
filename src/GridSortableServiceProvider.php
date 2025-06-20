@@ -1,35 +1,38 @@
 <?php
 
-namespace Dcat\Admin\Extension\GridSortable;
+namespace Dcat\Admin\GridSortable;
 
-use Dcat\Admin\Admin;
-use Illuminate\Support\ServiceProvider;
+use Dcat\Admin\Extend\ServiceProvider;
+use Dcat\Admin\Grid;
 
 class GridSortableServiceProvider extends ServiceProvider
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function boot()
+    protected $column = '__sortable__';
+
+    public function init()
     {
-        $extension = GridSortable::make();
+        parent::init();
 
-        if ($views = $extension->views()) {
-            $this->loadViewsFrom($views, GridSortable::NAME);
-        }
+        $column = $this->column;
 
-        if ($lang = $extension->lang()) {
-            $this->loadTranslationsFrom($lang, GridSortable::NAME);
-        }
+        Grid::macro(
+            'sortable',
+            function ($sortName = 'order') use ($column) {
+                /** @var \Dcat\Admin\Grid $this */
+                $this->tools(new SaveOrderButton($sortName));
 
-        if ($migrations = $extension->migrations()) {
-            $this->loadMigrationsFrom($migrations);
-        }
+                if (!request()->has($sortName)) {
+                    $this->model()->ordered();
+                }
 
-        $this->app->booted(function () use ($extension) {
-            $extension->routes(__DIR__.'/../routes/web.php');
-        });
+                $this->column($column, ' ')
+                    ->displayUsing(SortableDisplay::class, [$sortName]);
+            }
+        );
+    }
 
-        $extension->boot();
+    public function settingForm()
+    {
+        return new Setting($this);
     }
 }

@@ -1,29 +1,35 @@
 {
-    "name": "dcat-admin-extension/grid-sortable",
-    "description": "description...",
+    "name": "elysiumrealms/extension-grid-sortable",
+    "description": "Grid Sortable",
     "type": "library",
-    "keywords": ["dcat-admin", "extension", "grid-sortable"],
-    "homepage": "https://github.com/dcat-admin-extension/grid-sortable",
+    "keywords": [
+        "dcat-admin",
+        "extension"
+    ],
+    "homepage": "https://github.com/elysiumrealms/extension-grid-sortable",
     "license": "MIT",
     "authors": [
         {
-            "name": "jqh",
-            "email": "841324345@qq.com"
+            "name": "deflinhec",
+            "email": "deflinhec@gmail.com"
         }
     ],
     "require": {
-        "php": ">=7.1.0",
-        "spatie/eloquent-sortable": "*"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "~6.0"
+        "php": "^7.3|^8.0",
+        "dcat/laravel-admin": "~2.0",
+        "spatie/eloquent-sortable": "^3.0"
     },
     "autoload": {
         "psr-4": {
-            "Dcat\\Admin\\Extension\\GridSortable\\": "src/"
-        },
-         "files": [
-            "src/bootstrap.php"
-        ]
+            "Dcat\\Admin\\GridSortable\\": "src/"
+        }
+    },
+    "extra": {
+        "dcat-admin": "Dcat\\Admin\\GridSortable\\GridSortableServiceProvider",
+        "laravel": {
+            "providers": [
+                "Dcat\\Admin\\GridSortable\\GridSortableServiceProvider"
+            ]
+        }
     }
 }

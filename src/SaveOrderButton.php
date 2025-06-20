@@ -1,6 +1,6 @@
 <?php
 
-namespace Dcat\Admin\Extension\GridSortable;
+namespace Dcat\Admin\GridSortable;
 
 use Dcat\Admin\Admin;
 use Dcat\Admin\Grid\Tools\AbstractTool;
@@ -27,23 +27,25 @@ class SaveOrderButton extends AbstractTool
 
         $script = <<<JS
 $('.grid-save-order-btn').click(function () {
-    $.post('{$route}', {
-        _token: Dcat.token,
-        _model: '{$class}',
-        _sort: $(this).data('sort'),
-        _column: '{$this->sortColumn}',
-    },
-    function(data){
-    
-        if (data.status) {
-            Dcat.success(data.message);
-            Dcat.reload();
-        } else {
-            Dcat.error(data.message);
+    $.ajax({
+        url: '{$route}',
+        type: 'POST',
+        data: {
+            _token: Dcat.token,
+            _model: '{$class}',
+            _sort: $(this).data('sort'),
+            _column: '{$this->sortColumn}',
+        },
+        success: function(data){
+            if (data.status) {
+                Dcat.success(data.message);
+                Dcat.reload();
+            } else {
+                Dcat.error(data.message);
+            }
         }
     });
 });
-    
 JS;
         Admin::script($script);
     }
@@ -61,4 +63,3 @@ JS;
 HTML;
     }
 }
-
