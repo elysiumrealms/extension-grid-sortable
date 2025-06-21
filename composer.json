@@ -1,6 +1,6 @@
 {
     "name": "dcat-admin/extension-grid-sortable",
-    "description": "Grid Sortable",
+    "description": "Grid Sortable Extension for Dcat Admin",
     "type": "library",
     "keywords": [
         "dcat-admin",

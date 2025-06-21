@@ -9,6 +9,16 @@ class GridSortableServiceProvider extends ServiceProvider
 {
     protected $column = '__sortable__';
 
+    /**
+     * 自动注册扩展.
+     */
+    protected function autoRegister()
+    {
+        parent::autoRegister();
+
+        Grid::macro('sortable', function ($sortName = 'order') {});
+    }
+
     public function init()
     {
         parent::init();
@@ -29,10 +39,5 @@ class GridSortableServiceProvider extends ServiceProvider
                     ->displayUsing(SortableDisplay::class, [$sortName]);
             }
         );
-    }
-
-    public function settingForm()
-    {
-        return new Setting($this);
     }
 }
