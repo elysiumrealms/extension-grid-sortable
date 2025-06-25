@@ -8,7 +8,7 @@ use Dcat\Admin\Grid\Displayers\AbstractDisplayer;
 class SortableDisplay extends AbstractDisplayer
 {
     protected static $js = [
-        'vendor/dcat-admin-extensions/elysiumrealms/extension-grid-sortable/sortable.min.js',
+        'vendor/dcat-admin-extensions/dcat-admin/extension-grid-sortable/sortable.min.js',
     ];
 
     protected function script()
